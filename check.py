@@ -18,7 +18,9 @@ bot_token = os.getenv('bot_token')
 chat_id = os.getenv('chat_id')
 
 bot = telegram.Bot(token=bot_token)
-
+# Get the directory of the current script
+project_directory = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(project_directory, 'order_status.json')
 
 async def send_message(chat_id, state_text, current_time):
     text = '{state} ({time})'.format(
@@ -57,7 +59,6 @@ def write_response_to_file(file_path, response):
 
 
 async def main():
-    file_path = 'order_status.json'
     new_response = fetch_order_status()
     current_time = datetime.now().strftime('%d.%m. %H:%M')
 
