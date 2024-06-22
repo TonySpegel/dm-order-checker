@@ -22,6 +22,7 @@ bot = telegram.Bot(token=bot_token)
 project_directory = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(project_directory, 'order_status.json')
 
+
 async def send_message(chat_id, state_text, current_time):
     text = '{state} ({time})'.format(
         state=state_text,
@@ -33,11 +34,17 @@ async def send_message(chat_id, state_text, current_time):
 
 
 def fetch_order_status():
-    response = requests.get(spot_api_url, params={
-        'config': config_number,
-        'shop': shop_id,
-        'order': order_id
-    })
+    response = requests.get(
+        spot_api_url,
+        params={
+            'config': config_number,
+            'shop': shop_id,
+            'order': order_id
+        },
+        headers={
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36'
+        },
+    )
 
     response_json = response.json()
     state_code = response_json['subOrders'][0]['stateCode']
