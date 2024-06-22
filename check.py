@@ -59,7 +59,7 @@ def write_response_to_file(file_path, response):
 async def main():
     file_path = 'order_status.json'
     new_response = fetch_order_status()
-    current_time = datetime.now().strftime('%d.%m %H:%M')
+    current_time = datetime.now().strftime('%d.%m. %H:%M')
 
     previous_response = read_previous_response(file_path)
 
