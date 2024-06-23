@@ -49,8 +49,13 @@ def fetch_order_status():
     response_json = response.json()
     state_code = response_json['subOrders'][0]['stateCode']
     state_text = response_json['subOrders'][0]['stateText']
+    state_date = response_json['subOrders'][0]['stateDate']
 
-    return {'stateCode': state_code, 'stateText': state_text}
+    return {
+        'stateCode': state_code, 
+        'stateText': state_text,
+        'stateDate': state_date
+    }
 
 
 def read_previous_response(file_path):
@@ -80,6 +85,9 @@ async def main():
                 state_text=new_response['stateText'],
                 current_time=current_time
             )
+            
+            write_response_to_file(file_path, new_response)
+
     # No order state has been checked before, send a message
     else:
         await send_message(
@@ -88,7 +96,7 @@ async def main():
             current_time=current_time
         )
 
-    write_response_to_file(file_path, new_response)
+        write_response_to_file(file_path, new_response)
 
 if __name__ == '__main__':
     asyncio.run(main())
